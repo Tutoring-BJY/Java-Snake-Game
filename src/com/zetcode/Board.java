@@ -16,8 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Board extends JPanel implements ActionListener {
-    /**/ 상수 정의
-        보드의 넓이와 높이 / 점 크기 / 전체 보드 도트 최대 수 / 사과 임의 위치 / 게임 속도 
+    /* 상수 정의
+        보드의 넓이와 높이 / 점 크기 / 전체 보드 도트 최대 수 / 사과 임의 위치 / 게임 속도 */
     private final int B_WIDTH = 300;
     private final int B_HEIGHT = 300;
     private final int DOT_SIZE = 10;

@@ -38,7 +38,8 @@ public class Board extends JPanel implements ActionListener {
     private boolean upDirection = false;
     private boolean downDirection = false;
     private boolean inGame = true;
-
+    private boolean stopGame = false;
+    
     private Timer timer;
     private Image ball;
     private Image apple;
@@ -73,7 +74,10 @@ public class Board extends JPanel implements ActionListener {
     }
     // 사과 찾은 후 타이머 시작
     private void initGame() {
-
+    	
+    	removeKeyListener(new TAdapter2());
+    	removeKeyListener(new TAdapter3());
+    	
         dots = 3;
 
         for (int z = 0; z < dots; z++) {
@@ -81,9 +85,9 @@ public class Board extends JPanel implements ActionListener {
             y[z] = 50;
         }
         
-        locateApple(); // 사과의 위치
+        locateApple(); // 사과 위치 시키기
 
-        timer = new Timer(DELAY, this); // 사과를 찾은 시간
+        timer = new Timer(DELAY, this); // 업데이트 간격 
         timer.start(); // 타이머 시작
     }
 
@@ -110,26 +114,45 @@ public class Board extends JPanel implements ActionListener {
 
             Toolkit.getDefaultToolkit().sync(); // 화면 업데이트
 
+        } else if(stopGame){
+        	escStop(g); // 정지 화면 불러오기
+        
         } else {
-
             gameOver(g); // 게임오버 표시
         }        
     }
 
     private void gameOver(Graphics g) {
     	addKeyListener(new TAdapter2());
+    	inGame = false;
+    	timer.stop();
+    	
         // 게임 오버 시 메세지 출력
         String msg = "Game Over";
-        String msg2 = "Press Spacebar to Retry";
+        String dotsnum = dots + " Dots!";
+        String msg2 = "Press Spacebar to Retry.";
+        Font small = new Font("Helvetica", Font.BOLD, 14);
+        FontMetrics metr = getFontMetrics(small);
+
+        g.setColor(Color.white);
+        g.setFont(small);
+        g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2 - 20);
+        g.drawString(dotsnum, (B_WIDTH - metr.stringWidth(dotsnum)) / 2, B_HEIGHT / 2);
+        g.drawString(msg2, (B_WIDTH - metr.stringWidth(msg2)) / 2, B_HEIGHT / 2 + 50);
+    }
+
+    private void escStop(Graphics g) {
+    	addKeyListener(new TAdapter3());
+        // 게임 일시 정지 시
+        String msg = "Press ESC to Continue.";
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics metr = getFontMetrics(small);
 
         g.setColor(Color.white);
         g.setFont(small);
         g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2);
-        g.drawString(msg2, (B_WIDTH - metr.stringWidth(msg2)) / 2, B_HEIGHT / 2 + 30);
     }
-
+    
     private void checkApple() {
 
         if ((x[0] == apple_x) && (y[0] == apple_y)) {
@@ -190,7 +213,7 @@ public class Board extends JPanel implements ActionListener {
             inGame = false;
         }
         
-        if (!inGame) {
+        if (!inGame && !stopGame) {
             timer.stop();
         }
     }
@@ -250,6 +273,11 @@ public class Board extends JPanel implements ActionListener {
                 rightDirection = false;
                 leftDirection = false;
             }
+            
+            if ((key == 27) && (!stopGame)) { // ESC
+            	stopGame = true;
+            	inGame = false;
+            }
         }
     }
     
@@ -262,9 +290,25 @@ public class Board extends JPanel implements ActionListener {
         	int key = e.getKeyChar();
 
             if (key == ' '){
+            	//initBoard();
             	initGame();
             	inGame = true;
             }
         }
     }  
+    
+    private class TAdapter3 extends KeyAdapter {
+
+        // 스페이스 바 누르면 게임 재시작
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+        	int key = e.getKeyChar();
+
+            if ((key == 27) && (stopGame)) { // 게임 정지 해제
+            	stopGame = false;
+            	inGame = true;
+            }
+        }
+    }
 }

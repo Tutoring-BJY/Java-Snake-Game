@@ -93,29 +93,29 @@ public class Board extends JPanel implements ActionListener {
     }
     
     private void doDrawing(Graphics g) {
-        
+        // UI 표시 메서드
         if (inGame) {
-
-            g.drawImage(apple, apple_x, apple_y, this);
-
+        	// 게임 도중에
+            g.drawImage(apple, apple_x, apple_y, this); // 사과 표시
+            
             for (int z = 0; z < dots; z++) {
                 if (z == 0) {
-                    g.drawImage(head, x[z], y[z], this);
+                    g.drawImage(head, x[z], y[z], this); // 머리 이미지 로딩
                 } else {
-                    g.drawImage(ball, x[z], y[z], this);
+                    g.drawImage(ball, x[z], y[z], this); // 몸통 이미지 로딩
                 }
             }
 
-            Toolkit.getDefaultToolkit().sync();
+            Toolkit.getDefaultToolkit().sync(); // 화면 업데이트
 
         } else {
 
-            gameOver(g);
+            gameOver(g); // 게임오버 표시
         }        
     }
 
     private void gameOver(Graphics g) {
-        
+        // 게임 오버 시 메세지 출력
         String msg = "Game Over";
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics metr = getFontMetrics(small);
@@ -128,33 +128,34 @@ public class Board extends JPanel implements ActionListener {
     private void checkApple() {
 
         if ((x[0] == apple_x) && (y[0] == apple_y)) {
-
-            dots++;
-            locateApple();
+        	// 사과에 머리가 닿았을 때
+            dots++; // 몸집 1 커짐 
+            locateApple(); // 사과 재위치
         }
     }
 
     private void move() {
-
-        for (int z = dots; z > 0; z--) {
-            x[z] = x[(z - 1)];
-            y[z] = y[(z - 1)];
+    	
+        for (int z = dots; z > 0; z--) { 
+        	// 현재 점을 앞쪽 점의 위치로 변경 (이동)
+            x[z] = x[(z - 1)];  
+            y[z] = y[(z - 1)]; 
         }
 
-        if (leftDirection) {
-            x[0] -= DOT_SIZE;
+        if (leftDirection) { // 왼쪽 방향일 때
+            x[0] -= DOT_SIZE; // x값 감소
         }
 
-        if (rightDirection) {
-            x[0] += DOT_SIZE;
+        if (rightDirection) { // 오른쪽 방향일 때
+            x[0] += DOT_SIZE; // x값 증가
         }
 
-        if (upDirection) {
-            y[0] -= DOT_SIZE;
+        if (upDirection) { // 윗 방향일 때
+            y[0] -= DOT_SIZE; // y값 감소
         }
 
-        if (downDirection) {
-            y[0] += DOT_SIZE;
+        if (downDirection) { // 아래 방향일 때
+            y[0] += DOT_SIZE; // y값 상승
         }
     }
 

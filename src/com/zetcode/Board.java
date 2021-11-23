@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -116,14 +117,17 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void gameOver(Graphics g) {
+    	addKeyListener(new TAdapter2());
         // 게임 오버 시 메세지 출력
         String msg = "Game Over";
+        String msg2 = "Press Spacebar to Retry";
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics metr = getFontMetrics(small);
 
         g.setColor(Color.white);
         g.setFont(small);
         g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2);
+        g.drawString(msg2, (B_WIDTH - metr.stringWidth(msg2)) / 2, B_HEIGHT / 2 + 30);
     }
 
     private void checkApple() {
@@ -248,4 +252,19 @@ public class Board extends JPanel implements ActionListener {
             }
         }
     }
+    
+    private class TAdapter2 extends KeyAdapter {
+
+        // 스페이스 바 누르면 게임 재시작
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+        	int key = e.getKeyChar();
+
+            if (key == ' '){
+            	initGame();
+            	inGame = true;
+            }
+        }
+    }  
 }

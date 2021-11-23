@@ -93,29 +93,29 @@ public class Board extends JPanel implements ActionListener {
     }
     
     private void doDrawing(Graphics g) {
-        // UI Ç¥½Ã ¸Ş¼­µå
+        // UI í‘œì‹œ ë©”ì„œë“œ
         if (inGame) {
-        	// °ÔÀÓ µµÁß¿¡
-            g.drawImage(apple, apple_x, apple_y, this); // »ç°ú Ç¥½Ã
+        	// ê²Œì„ ë„ì¤‘ì—
+            g.drawImage(apple, apple_x, apple_y, this); // ì‚¬ê³¼ í‘œì‹œ
             
             for (int z = 0; z < dots; z++) {
                 if (z == 0) {
-                    g.drawImage(head, x[z], y[z], this); // ¸Ó¸® ÀÌ¹ÌÁö ·Îµù
+                    g.drawImage(head, x[z], y[z], this); // ë¨¸ë¦¬ ì´ë¯¸ì§€ ë¡œë”©
                 } else {
-                    g.drawImage(ball, x[z], y[z], this); // ¸öÅë ÀÌ¹ÌÁö ·Îµù
+                    g.drawImage(ball, x[z], y[z], this); // ëª¸í†µ ì´ë¯¸ì§€ ë¡œë”©
                 }
             }
 
-            Toolkit.getDefaultToolkit().sync(); // È­¸é ¾÷µ¥ÀÌÆ®
+            Toolkit.getDefaultToolkit().sync(); // í™”ë©´ ì—…ë°ì´íŠ¸
 
         } else {
 
-            gameOver(g); // °ÔÀÓ¿À¹ö Ç¥½Ã
+            gameOver(g); // ê²Œì„ì˜¤ë²„ í‘œì‹œ
         }        
     }
 
     private void gameOver(Graphics g) {
-        // °ÔÀÓ ¿À¹ö ½Ã ¸Ş¼¼Áö Ãâ·Â
+        // ê²Œì„ ì˜¤ë²„ ì‹œ ë©”ì„¸ì§€ ì¶œë ¥
         String msg = "Game Over";
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics metr = getFontMetrics(small);
@@ -128,37 +128,38 @@ public class Board extends JPanel implements ActionListener {
     private void checkApple() {
 
         if ((x[0] == apple_x) && (y[0] == apple_y)) {
-        	// »ç°ú¿¡ ¸Ó¸®°¡ ´ê¾ÒÀ» ¶§
-            dots++; // ¸öÁı 1 Ä¿Áü 
-            locateApple(); // »ç°ú ÀçÀ§Ä¡
+        	// ì‚¬ê³¼ì— ë¨¸ë¦¬ê°€ ë‹¿ì•˜ì„ ë•Œ
+            dots++; // ëª¸ì§‘ 1 ì»¤ì§ 
+            locateApple(); // ì‚¬ê³¼ ì¬ìœ„ì¹˜
         }
     }
 
     private void move() {
     	
         for (int z = dots; z > 0; z--) { 
-        	// ÇöÀç Á¡À» ¾ÕÂÊ Á¡ÀÇ À§Ä¡·Î º¯°æ (ÀÌµ¿)
+        	// í˜„ì¬ ì ì„ ì•ìª½ ì ì˜ ìœ„ì¹˜ë¡œ ë³€ê²½ (ì´ë™)
             x[z] = x[(z - 1)];  
             y[z] = y[(z - 1)]; 
         }
 
-        if (leftDirection) { // ¿ŞÂÊ ¹æÇâÀÏ ¶§
-            x[0] -= DOT_SIZE; // x°ª °¨¼Ò
+        if (leftDirection) { // ì™¼ìª½ ë°©í–¥ì¼ ë•Œ
+            x[0] -= DOT_SIZE; // xê°’ ê°ì†Œ
         }
 
-        if (rightDirection) { // ¿À¸¥ÂÊ ¹æÇâÀÏ ¶§
-            x[0] += DOT_SIZE; // x°ª Áõ°¡
+        if (rightDirection) { // ì˜¤ë¥¸ìª½ ë°©í–¥ì¼ ë•Œ
+            x[0] += DOT_SIZE; // xê°’ ì¦ê°€
         }
 
-        if (upDirection) { // À­ ¹æÇâÀÏ ¶§
-            y[0] -= DOT_SIZE; // y°ª °¨¼Ò
+        if (upDirection) { // ìœ— ë°©í–¥ì¼ ë•Œ
+            y[0] -= DOT_SIZE; // yê°’ ê°ì†Œ
         }
 
-        if (downDirection) { // ¾Æ·¡ ¹æÇâÀÏ ¶§
-            y[0] += DOT_SIZE; // y°ª »ó½Â
+        if (downDirection) { // ì•„ë˜ ë°©í–¥ì¼ ë•Œ
+            y[0] += DOT_SIZE; // yê°’ ìƒìŠ¹
         }
     }
 
+    // ì§€ë ì´ì˜ ë¨¸ë¦¬ê°€ ë²½ì— ë‹¿ì•˜ëŠ”ì§€ í™•ì¸í•˜ê³  ë‹¿ì•˜ë‹¤ë©´ ì§€ë ì´ë¥¼ ì£½ì¸ë‹¤.
     private void checkCollision() {
 
         for (int z = dots; z > 0; z--) {
@@ -189,6 +190,7 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
+    // ì‚¬ê³¼ì˜ ìœ„ì¹˜ë¥¼ ëœë¤ìœ¼ë¡œ ì„¤ì •í•œë‹¤.
     private void locateApple() {
 
         int r = (int) (Math.random() * RAND_POS);
@@ -198,6 +200,7 @@ public class Board extends JPanel implements ActionListener {
         apple_y = ((r * DOT_SIZE));
     }
 
+    // ê²Œì„ì„ ì‹¤í–‰í•˜ë©´ ì‚¬ê³¼ì˜ ìœ„ì¹˜ë¥¼ ëœë¤ìœ¼ë¡œ ì„¤ì •í•˜ê³  ë²½ì— ì¶©ëŒí•˜ëŠ”ì§€ ì²´í¬í•˜ëŠ” ê³¼ì •ì„ ì‹¤ì‹œí•œë‹¤.
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -213,6 +216,7 @@ public class Board extends JPanel implements ActionListener {
 
     private class TAdapter extends KeyAdapter {
 
+        // í‚¤ë³´ë“œì˜ í‚¤ë¥¼ ì´ìš©í•´ì„œ ì§€ë ì´ë¥¼ ìƒí•˜ì¢Œìš°ë¡œ ì›€ì§ì¸ë‹¤.
         @Override
         public void keyPressed(KeyEvent e) {
 

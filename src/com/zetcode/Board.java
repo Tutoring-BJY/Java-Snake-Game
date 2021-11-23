@@ -16,17 +16,18 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Board extends JPanel implements ActionListener {
-
+    /**/ 상수 정의
+        보드의 넓이와 높이 / 점 크기 / 전체 보드 도트 최대 수 / 사과 임의 위치 / 게임 속도 
     private final int B_WIDTH = 300;
     private final int B_HEIGHT = 300;
     private final int DOT_SIZE = 10;
     private final int ALL_DOTS = 900;
     private final int RAND_POS = 29;
     private final int DELAY = 140;
-
+    // 모든 x와 y의 위치 저장
     private final int x[] = new int[ALL_DOTS];
     private final int y[] = new int[ALL_DOTS];
-
+    // 상수 정의
     private int dots;
     private int apple_x;
     private int apple_y;
@@ -41,12 +42,12 @@ public class Board extends JPanel implements ActionListener {
     private Image ball;
     private Image apple;
     private Image head;
-
+    // 보드 호출
     public Board() {
         
         initBoard();
     }
-    
+    // 보드 생성
     private void initBoard() {
 
         addKeyListener(new TAdapter());
@@ -57,7 +58,7 @@ public class Board extends JPanel implements ActionListener {
         loadImages();
         initGame();
     }
-
+    // 볼, 사과, 머리 이미지 생성
     private void loadImages() {
 
         ImageIcon iid = new ImageIcon("src/resources/dot.png");
@@ -69,7 +70,7 @@ public class Board extends JPanel implements ActionListener {
         ImageIcon iih = new ImageIcon("src/resources/head.png");
         head = iih.getImage();
     }
-
+    // 사과 찾은 후 타이머 시작
     private void initGame() {
 
         dots = 3;
@@ -79,13 +80,13 @@ public class Board extends JPanel implements ActionListener {
             y[z] = 50;
         }
         
-        locateApple();
+        locateApple(); // 사과의 위치
 
-        timer = new Timer(DELAY, this);
-        timer.start();
+        timer = new Timer(DELAY, this); // 사과를 찾은 시간
+        timer.start(); // 타이머 시작
     }
 
-    @Override
+    @Override // 현재 이미지를 나타내고 보여줌
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 

@@ -274,7 +274,7 @@ public class Board extends JPanel implements ActionListener {
                 leftDirection = false;
             }
             
-            if ((key == 27) && (!stopGame)) { // ESC
+            if ((key == 27) && (!stopGame)) { // ESC 누르면 일시정지
             	stopGame = true;
             	inGame = false;
             }
@@ -299,7 +299,7 @@ public class Board extends JPanel implements ActionListener {
     
     private class TAdapter3 extends KeyAdapter {
 
-        // 스페이스 바 누르면 게임 재시작
+        // 정지상태에서 ESC 누르면 게임 다시 시작
         @Override
         public void keyPressed(KeyEvent e) {
 
